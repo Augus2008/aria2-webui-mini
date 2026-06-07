@@ -1,0 +1,15 @@
+aria.example.com {
+    encode gzip
+
+    @jsonrpc path /jsonrpc
+    handle @jsonrpc {
+        reverse_proxy aria2:6800 {
+            header_up X-Forwarded-Host {host}
+            header_up X-Forwarded-Proto {scheme}
+            header_up X-Forwarded-For {remote_host}
+        }
+    }
+
+    root * /srv/aria-official
+    file_server
+}
