@@ -2,6 +2,10 @@
 
 一个为 Minis / iOS / 小屏设备优化的极简 Aria2 Web 管理界面。
 
+## 截图
+
+![mobile screenshot](./screenshot-mobile.jpg)
+
 ## 特性
 
 - 直接添加 HTTP / 磁力链接
@@ -13,10 +17,12 @@
 - 最近添加记录（最近 10 条）
 - 任务显示所属目录
 - 适合和 File Browser 联动使用
+- 移动端按钮优化（复制链接 / 暂停 / 删除）
 
 ## 目录结构
 
 - `index.html`：前端页面
+- `screenshot-mobile.jpg`：移动端截图
 - `caddy/Caddyfile.snippet`：Caddy 反代片段
 - `scripts/deploy.sh`：示例部署脚本
 - `scripts/update.sh`：示例更新脚本
