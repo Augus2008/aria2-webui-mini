@@ -46,11 +46,15 @@
     .progress-bar.seeding { background: #22c55e; }
     .global-speed { text-align: center; font-size: 13px; color: #9ca3af; padding: 4px 0; }
     .history { margin-top: 12px; border-top: 1px solid #374151; padding-top: 12px; }
-    .history-title { font-size: 13px; color: #9ca3af; margin-bottom: 8px; }
+    .history-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+    .history-title { font-size: 13px; color: #9ca3af; margin-bottom: 0; }
+    .history-toggle { font-size: 20px; color: #9ca3af; line-height: 1; }
+    .history-body { display: none; margin-top: 8px; }
+    .history-body.open { display: block; }
     .history-item { font-size: 12px; color: #93c5fd; padding: 6px 0; border-bottom: 1px dashed #374151; word-break: break-all; cursor: pointer; }
     .history-item:last-child { border-bottom: none; }
-    .task-dir { font-size: 12px; color: #93c5fd; margin-top: 4px; }
-    .task-dir-link { color: #93c5fd; text-decoration: none; }
+    .task-dir { font-size: 12px; color: #93c5fd; margin-top: 4px; overflow: hidden; }
+    .task-dir-link { color: #93c5fd; text-decoration: none; display: inline-block; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
     .task-dir-link:hover { text-decoration: underline; }
     .empty { color: #6b7280; text-align: center; padding: 24px 0; font-size: 14px; }
   </style>
@@ -78,8 +82,13 @@
     <div id="status" class="status"></div>
     <div id="globalSpeed" class="global-speed"></div>
     <div class="history">
-      <div class="history-title">最近添加</div>
-      <div id="historyList"><div class="empty" style="padding:8px 0">暂无记录</div></div>
+      <div class="history-header" onclick="toggleHistory()">
+        <div class="history-title">最近添加</div>
+        <div id="historyToggle" class="history-toggle">▸</div>
+      </div>
+      <div id="historyBody" class="history-body">
+        <div id="historyList"><div class="empty" style="padding:8px 0">暂无记录</div></div>
+      </div>
     </div>
   </div>
 
@@ -184,6 +193,13 @@ function getHistory() {
 }
 function saveHistory(list) {
   localStorage.setItem('aria2_history', JSON.stringify(list.slice(0,10)));
+}
+function toggleHistory() {
+  const body = document.getElementById('historyBody');
+  const icon = document.getElementById('historyToggle');
+  if (!body || !icon) return;
+  const isOpen = body.classList.toggle('open');
+  icon.textContent = isOpen ? '▾' : '▸';
 }
 function renderHistory() {
   const el = document.getElementById('historyList');
